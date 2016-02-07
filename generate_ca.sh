@@ -2,7 +2,9 @@
 
 # http://code.rogerhub.com/infrastructure/474/signing-your-own-wildcard-sslhttps-certificates/
 
-WORKDIR="."
+WORKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# Ein " um das Syntaxhighlighting wieder zu korrigieren
+
 
 CAname="CA"
 if [ ! -d "$WORKDIR/$CAname" ]

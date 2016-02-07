@@ -9,7 +9,8 @@ echo  -e "Please input subdomain: "
 read SUBDOMAIN
 
 
-WORKDIR="."
+WORKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# Ein " um das Syntaxhighlighting wieder zu korrigieren
 
 # File containing dynamic DNS-Entries like 'example.dyndns.org' or 'example.myqnapcloud.com'
 DYNDNSFILE="$WORKDIR/dyndns.txt"
