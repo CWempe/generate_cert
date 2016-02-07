@@ -1,0 +1,23 @@
+# exclude all files in subfolders
+**/*
+
+# Exclude customized dyndns.txt
+dyndns.txt
+
+# Exclude customized issuer.conf
+issuer.conf
+
+# Exclude openssl_custom.cnf
+openssl_custom.cnf
+
+
+# Exclude files within these folders
+conf/**
+dat/**
+log/**
+tmp/**
+
+
+# Exclude backups
+*.devel
+*.*cw
