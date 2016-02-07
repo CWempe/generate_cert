@@ -35,12 +35,19 @@ CERTp12="$WORKDIR/$SERVER/$SERVER.p12"
 
 CHAINpem="$WORKDIR/$SERVER/chain.pem"
 
-C=""
-ST=""
-L=""
-O=""
-OU=""
 
+ISSUERFILE="$WORKDIR/issuer.conf"
+
+if [ -f "$ISSUERFILE" ]
+    then
+        source "$ISSUERFILE"
+    else
+        C=""
+        ST=""
+        L=""
+        O=""
+        OU=""
+fi
 
 
 # generate openssl-config with wildcards
