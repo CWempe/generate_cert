@@ -15,14 +15,19 @@ CApem="$WORKDIR/$CAname/$CAname.pem"
 CAtxt="$WORKDIR/$CAname/$CAname.txt"
 CAsrl="$WORKDIR/$CAname/$CAname.srl"
 
+ISSUERFILE="$WORKDIR/issuer.conf"
 
-
-C=""
-ST=""
-L=""
-O=""
-OU=""
-CN=""
+if [ -f "$ISSUERFILE" ]
+    then
+        source "$ISSUERFILE"
+    else
+        C=""
+        ST=""
+        L=""
+        O=""
+        OU=""
+        CN=""
+fi
 
 # Generate Private Key
 if [ -f "$CAkey" ]
