@@ -43,11 +43,8 @@ if [ -f "$ISSUERFILE" ]
     then
         source "$ISSUERFILE"
     else
-        C=""
-        ST=""
-        L=""
-        O=""
-        OU=""
+        echo "Using $ISSUERFILE.example"
+        source "$ISSUERFILE.example"
 fi
 
 
@@ -56,6 +53,11 @@ if [ -f "$CERTcfn" ]
     then
         echo "$CERTcfn already exists. Skip generation."
     else
+        if [ ! -f "openssl_custom.cnf" ]
+            then
+                echo "Copy /etc/ssl/openssl.cnf ..."
+                 cp /etc/ssl/openssl.cnf openssl_custom.cnf
+        fi
         echo "Generate $CERTcfn ..."
         cp openssl_custom.cnf "$CERTcfn"
         echo "DNS.1 = $SERVER"                         >> "$CERTcfn"
@@ -100,9 +102,16 @@ fi
 openssl req -in "$CERTcsr" -text -noout > "$CERTcsr.txt"
 
 
+# if no $CAsrl exists, create it for the first time
+if [ -f "$CAsrl" ]
+    then
+        SERIALOPTION="-CAserial $CAsrl"
+    else
+        SERIALOPTION="-CAcreateserial"
+fi
 
 # Sign the CSR with the CA
-openssl x509 -req -sha256 -days 9999 -in "$CERTcsr" -CA "$CApem" -CAkey "$CAkey" -CAserial "$CAsrl" -extensions v3_req -out "$CERTcrt" -extfile "$CERTcfn"
+openssl x509 -req -sha256 -days 9999 -in "$CERTcsr" -CA "$CApem" -CAkey "$CAkey" $SERIALOPTION -extensions v3_req -out "$CERTcrt" -extfile "$CERTcfn"
 
 # Generate certificate with private key in PEM-format
 cat "$CERTcrt" "$CERTkey" > "$CERTpem"
