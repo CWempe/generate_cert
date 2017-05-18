@@ -23,12 +23,8 @@ if [ -f "$ISSUERFILE" ]
     then
         source "$ISSUERFILE"
     else
-        C=""
-        ST=""
-        L=""
-        O=""
-        OU=""
-        CN=""
+        echo "Using $ISSUERFILE.example"
+        source "$ISSUERFILE.example"
 fi
 
 # Generate Private Key
@@ -37,15 +33,16 @@ if [ -f "$CAkey" ]
         echo "$CAkey already exists. Skip generation."
     else
         echo "Generate $CAkey ..."
-        openssl genrsa -out "$CAkey" 2048
+        openssl genrsa -out "$CAkey" 4096
 fi
 
 # Generate Public Key
-if [ -f "$CApem" ]
+if [ -s "$CApem" ]
     then
         echo "$CApem already exists. Skip generation."
     else
         echo "Generate $CApem ..."
+        rm -f "$CApem"
         openssl req -x509 -sha256 -new -nodes -key "$CAkey" -days 9999 -out "$CApem" -subj "/C=$C/ST=$ST/L=$L/O=$O/OU=$OU/CN=$CN"
 fi
 
