@@ -48,3 +48,5 @@ fi
 
 openssl x509 -in "$CApem" -text -noout > "$CApem.txt"
 
+# fix file permissions to make it secure
+chmod 600 "$WORKDIR/$CAname/"*

@@ -123,3 +123,6 @@ cat "$CApem" "$CERTcrt" > "$CHAINpem"
 # Generate PKCS#12 container with ca.crt, server.crt and server.key
 openssl pkcs12 -export -inkey "$CERTkey" -in "$CHAINpem" -out "$CERTp12"
 openssl pkcs12 -in "$CERTp12" -nodes > "$CERTp12.txt"
+
+# fix file permissions to make it secure
+chmod 600 "$WORKDIR/$SERVER/"*
