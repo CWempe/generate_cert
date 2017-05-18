@@ -1,7 +1,7 @@
 #!/bin/bash
-C=""
-ST=""
-L=""
-O=""
-OU=""
-CN=""
+#C=""
+#ST=""
+#L=""
+#O=""
+#OU=""
+CN="Custom Root CA"
